@@ -7,4 +7,4 @@ This app designed for Sylvania RGB remote (24Keys).
 <img src="https://github.com/user-attachments/assets/4e7acaca-097f-46b0-abd3-2346da9f91d1" width="320">  
 
 ### Download
-[Download Latest APK](https://github.com/chayanforyou/RGB-LED-Remote/releases/latest)
+[Google Play](https://play.google.com/store/apps/details?id=io.github.chayanforyou.rgbremote)
