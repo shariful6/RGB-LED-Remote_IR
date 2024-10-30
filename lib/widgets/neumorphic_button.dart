@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class NeumorphicButton extends StatefulWidget {
   const NeumorphicButton({
@@ -6,42 +6,40 @@ class NeumorphicButton extends StatefulWidget {
     required this.width,
     required this.height,
     required this.child,
-    this.padding,
-    this.margin,
+    this.padding = const EdgeInsets.all(15),
     required this.backgroundColor,
-    this.borderRadius,
-    this.boxShape,
+    this.borderRadius = 10.0,
+    this.boxShape = BoxShape.rectangle,
     required this.bottomRightShadowColor,
     required this.topLeftShadowColor,
-    this.bottomRightShadowBlurRadius,
-    this.bottomRightShadowSpreadRadius,
-    this.topLeftShadowBlurRadius,
-    this.topLeftShadowSpreadRadius,
+    this.bottomRightShadowBlurRadius = 3.0,
+    this.bottomRightShadowSpreadRadius = 1.0,
+    this.topLeftShadowBlurRadius = 3.0,
+    this.topLeftShadowSpreadRadius = 1.0,
     required this.onTap,
-    this.borderWidth,
+    this.borderWidth = 1.0,
     this.borderColor,
-    this.topLeftOffset,
-    this.bottomRightOffset,
+    this.topLeftOffset = const Offset(-2, -2),
+    this.bottomRightOffset = const Offset(2, 2),
   });
 
   final Widget child;
   final double width;
   final double height;
-  final EdgeInsets? padding;
-  final EdgeInsets? margin;
+  final EdgeInsets padding;
   final Color backgroundColor;
-  final double? borderRadius;
-  final BoxShape? boxShape;
+  final double borderRadius;
+  final BoxShape boxShape;
   final Color bottomRightShadowColor;
   final Color topLeftShadowColor;
-  final double? bottomRightShadowBlurRadius;
-  final double? bottomRightShadowSpreadRadius;
-  final double? topLeftShadowBlurRadius;
-  final double? topLeftShadowSpreadRadius;
+  final double bottomRightShadowBlurRadius;
+  final double bottomRightShadowSpreadRadius;
+  final double topLeftShadowBlurRadius;
+  final double topLeftShadowSpreadRadius;
   final VoidCallback onTap;
-  final Offset? topLeftOffset;
-  final Offset? bottomRightOffset;
-  final double? borderWidth;
+  final Offset topLeftOffset;
+  final Offset bottomRightOffset;
+  final double borderWidth;
   final Color? borderColor;
 
   @override
@@ -49,38 +47,43 @@ class NeumorphicButton extends StatefulWidget {
 }
 
 class _NeumorphicButtonState extends State<NeumorphicButton> {
+  BorderRadius? get _borderRadius =>
+      widget.boxShape == BoxShape.circle ? null : BorderRadius.circular(widget.borderRadius);
+
+  List<BoxShadow> get _boxShadows => [
+    BoxShadow(
+      color: widget.bottomRightShadowColor,
+      offset: widget.bottomRightOffset,
+      blurRadius: widget.bottomRightShadowBlurRadius,
+      spreadRadius: widget.bottomRightShadowSpreadRadius,
+    ),
+    BoxShadow(
+      color: widget.topLeftShadowColor,
+      offset: widget.topLeftOffset,
+      blurRadius: widget.topLeftShadowBlurRadius,
+      spreadRadius: widget.topLeftShadowSpreadRadius,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap, //onTap function
-      child: Container(
+    return InkWell(
+      onTap: widget.onTap,
+      customBorder: widget.boxShape == BoxShape.circle ? const CircleBorder() : null,
+      borderRadius: _borderRadius,
+      child: Ink(
         width: widget.width,
         height: widget.height,
-        padding: widget.padding ?? const EdgeInsets.all(15),
-        margin: widget.margin ?? const EdgeInsets.all(5),
+        padding: widget.padding,
         decoration: BoxDecoration(
           color: widget.backgroundColor,
-          borderRadius: widget.boxShape == BoxShape.rectangle
-              ? BorderRadius.circular(widget.borderRadius ?? 10) : null,
-          shape: widget.boxShape ?? BoxShape.rectangle,
+          borderRadius: _borderRadius,
+          shape: widget.boxShape,
           border: Border.all(
-            width: widget.borderWidth ?? 1,
+            width: widget.borderWidth,
             color: widget.borderColor ?? widget.backgroundColor,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: widget.bottomRightShadowColor,
-              offset: widget.bottomRightOffset ?? const Offset(2, 2),
-              blurRadius: widget.bottomRightShadowBlurRadius ?? 3,
-              spreadRadius: widget.bottomRightShadowSpreadRadius ?? 1,
-            ),
-            BoxShadow(
-              color: widget.topLeftShadowColor,
-              offset: widget.topLeftOffset ?? const Offset(-2, -2),
-              blurRadius: widget.topLeftShadowBlurRadius ?? 3,
-              spreadRadius: widget.topLeftShadowSpreadRadius ?? 1,
-            ),
-          ],
+          boxShadow: _boxShadows,
         ),
         child: widget.child,
       ),

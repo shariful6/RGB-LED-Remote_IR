@@ -32,7 +32,6 @@ class RemoteButton extends StatelessWidget {
         },
         width: 54,
         height: 54,
-        margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
         borderWidth: 1,
         borderColor: Colors.black12,
