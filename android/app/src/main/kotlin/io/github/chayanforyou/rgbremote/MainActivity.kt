@@ -160,10 +160,10 @@ class MainActivity : FlutterActivity(), MethodChannel.MethodCallHandler {
     private fun vibrate(result: MethodChannel.Result) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val vibrationEffect =
-                VibrationEffect.createOneShot(20, VibrationEffect.DEFAULT_AMPLITUDE)
+                VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE)
             vibrator.vibrate(vibrationEffect)
         } else {
-            vibrator.vibrate(20)
+            vibrator.vibrate(50)
         }
         result.success(null)
     }
